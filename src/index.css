@@ -1,1 +1,15 @@
+@import url("https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap");
+
 @import "tailwindcss";
+@plugin "daisyui";
+
+body {
+}
+button {
+  outline: none;
+  border: none;
+}
+h1 {
+  font-family: "Rock Salt", cursive;
+  font-weight: 400;
+}
