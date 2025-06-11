@@ -1,8 +1,6 @@
 import { FaLongArrowAltLeft } from "react-icons/fa";
 // import { useNavigate } from "@tanstack/react-router";
 import TodoList from "../components/TodoList";
-import FilterTodo from "../components/FilterTodo";
-import SearchTodo from "../components/SearchTodo";
 
 function Todos() {
   // const navigate = useNavigate();
@@ -25,11 +23,6 @@ function Todos() {
         <div className="mb-8 text-center">
           <h2 className="text-3xl  font-medium ">Todos</h2>
           <p>A display of all todo and their status</p>
-        </div>
-        <div className="mb-8 flex justify-between">
-          {" "}
-          <FilterTodo />
-          <SearchTodo />
         </div>
         <TodoList />
       </section>
