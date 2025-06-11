@@ -1,26 +1,36 @@
 import { FaLongArrowAltLeft } from "react-icons/fa";
-import { useNavigate } from "@tanstack/react-router";
+// import { useNavigate } from "@tanstack/react-router";
 import TodoList from "../components/TodoList";
+import FilterTodo from "../components/FilterTodo";
+import SearchTodo from "../components/SearchTodo";
 
 function Todos() {
-  const navigate = useNavigate();
+  // const navigate = useNavigate();
 
-  const handleBackToHomePage = () => {
-    navigate({
-      to: "/",
-    });
-  };
+  // const handleBackToHomePage = () => {
+  //   navigate({
+  //     to: "/",
+  //   });
+  // };
   return (
-    <div className="max-w-7xl mx-auto py-8">
-      <button
+    <div className="max-w-7xl mx-auto py-8 px-4">
+      {/* <button
         type="button"
         onClick={handleBackToHomePage}
-        className="btn text-blue-700 border-blue-700 border-2 hover:bg-blue-800 hover:text-white"
+        className="btn bg-transparent text-blue-700 border-blue-700 border-2 hover:bg-blue-800 hover:text-white"
       >
         <FaLongArrowAltLeft size="28" />
-      </button>
-      <section className="flex items-center justify-center flex-col">
-        <h2 className="text-3xl ">Collections of Todos</h2>
+      </button> */}
+      <section className="flex  flex-col">
+        <div className="mb-8 text-center">
+          <h2 className="text-3xl  font-medium ">Todos</h2>
+          <p>A display of all todo and their status</p>
+        </div>
+        <div className="mb-8 flex justify-between">
+          {" "}
+          <FilterTodo />
+          <SearchTodo />
+        </div>
         <TodoList />
       </section>
     </div>
