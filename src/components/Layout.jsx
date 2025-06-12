@@ -5,12 +5,11 @@ import { Outlet } from "@tanstack/react-router";
 
 function Layout() {
   return (
-    <div>
+    <div className="max-w-7xl mx-auto">
       <Header />
       <main className="flex-grow">
         <Outlet />
       </main>
-      <Footer />
     </div>
   );
 }
