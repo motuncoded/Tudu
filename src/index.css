@@ -4,10 +4,11 @@
 @plugin "daisyui";
 
 body {
+  background-color: #f2f3f4;
+  min-height: 100vh;
 }
 button {
   outline: none;
-  border: none;
 }
 h1 {
   font-family: "Rock Salt", cursive;
