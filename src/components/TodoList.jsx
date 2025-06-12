@@ -1,9 +1,11 @@
 import React, { useState, useEffect } from "react";
+import { Link } from "@tanstack/react-router";
 import { useTodos } from "../hooks/useTodos";
 import { RxDoubleArrowLeft, RxDoubleArrowRight } from "react-icons/rx";
 import FilterTodo from "./FilterTodo";
 import { LuCircleCheck, LuClock } from "react-icons/lu";
 import SearchTodo from "./SearchTodo";
+import Loader from "../components/Loader";
 
 const TodoList = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -15,40 +17,25 @@ const TodoList = () => {
     statusFilter,
     searchTerm.trim(),
   );
-  
-
 
   // Reset to page 1 when filter changes
   useEffect(() => {
     setCurrentPage(1);
   }, [statusFilter, searchTerm]);
 
-//
-const handleSearch = (e) => {
-  const value = e.target.value;
-  setSearchTerm(value);
-  
+  //
+  const handleSearch = (e) => {
+    const value = e.target.value;
+    setSearchTerm(value);
 
-  
-  // If input becomes empty, reset immediately
-  if (!value.trim()) {
-    setSearchTerm("");
-  }
-};
-
-
+    // If input becomes empty, reset immediately
+    if (!value.trim()) {
+      setSearchTerm("");
+    }
+  };
 
   if (isLoading) {
-    return (
-      <div
-        className="flex justify-center items-center h-64"
-        aria-live="polite"
-        aria-busy="true"
-      >
-        <span className="loading loading-spinner loading-lg"></span>
-        <span className="sr-only">Loading todos...</span>
-      </div>
-    );
+    return <Loader loading="Loading List of Todos" />;
   }
 
   if (isError) {
@@ -106,7 +93,11 @@ const handleSearch = (e) => {
               data.todos.map((todo) => (
                 <tr key={todo.id}>
                   <td scope="row">{todo.id}</td>
-                  <td>{todo.todo}</td>
+                  <td>
+                    <Link to="/todos/$id" params={{ id: todo.id }}>
+                      {todo.todo}
+                    </Link>
+                  </td>
                   <td>
                     <span
                       aria-label={todo.completed ? "Completed" : "Pending"}

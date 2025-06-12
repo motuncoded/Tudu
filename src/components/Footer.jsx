@@ -7,8 +7,8 @@ const Footer = () => {
   };
 
   return (
-    <footer className="  w-full py-6 mt-4">
-      <div className="container mx-auto px-4 flex   justify-between items-center">
+    <footer className="py-2 max-w-7xl mx-auto mt-4 ">
+      <div className="container mx-auto px-4 flex  justify-between items-center">
         <div className="text-gray-700 dark:text-gray-300 text-sm md:text-base">
           <p>© {new Date().getFullYear()} Created by Motunrayo 💙</p>
         </div>

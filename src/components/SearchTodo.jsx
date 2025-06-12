@@ -1,16 +1,14 @@
 import React from "react";
 import { FaTimes } from "react-icons/fa";
 
-    
 const SearchTodo = ({ searchTerm = "", setSearchTerm, onSearch }) => {
+  const handleChange = (e) => {
+    const value = e.target.value;
+    setSearchTerm(value);
+    // Call onSearch immediately with the new value
+    onSearch({ preventDefault: () => {}, target: { value } });
+  };
 
-    const handleChange = (e) => {
-      const value = e.target.value;
-      setSearchTerm(value);
-      // Call onSearch immediately with the new value
-      onSearch({ preventDefault: () => {}, target: { value } });
-    };
-    
   const handleClear = () => {
     setSearchTerm("");
     // Trigger search with empty value to reset
