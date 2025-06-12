@@ -3,31 +3,57 @@ import { useTodos } from "../hooks/useTodos";
 import { RxDoubleArrowLeft, RxDoubleArrowRight } from "react-icons/rx";
 import FilterTodo from "./FilterTodo";
 import { LuCircleCheck, LuClock } from "react-icons/lu";
+import SearchTodo from "./SearchTodo";
 
 const TodoList = () => {
   const [currentPage, setCurrentPage] = useState(1);
   const [statusFilter, setStatusFilter] = useState("all");
+  const [searchTerm, setSearchTerm] = useState("");
+
   const { data, isLoading, isError, error } = useTodos(
     currentPage,
     statusFilter,
+    searchTerm.trim(),
   );
+  
+
 
   // Reset to page 1 when filter changes
   useEffect(() => {
     setCurrentPage(1);
-  }, [statusFilter]);
+  }, [statusFilter, searchTerm]);
+
+//
+const handleSearch = (e) => {
+  const value = e.target.value;
+  setSearchTerm(value);
+  
+
+  
+  // If input becomes empty, reset immediately
+  if (!value.trim()) {
+    setSearchTerm("");
+  }
+};
+
+
 
   if (isLoading) {
     return (
-      <div className="flex justify-center items-center h-64">
+      <div
+        className="flex justify-center items-center h-64"
+        aria-live="polite"
+        aria-busy="true"
+      >
         <span className="loading loading-spinner loading-lg"></span>
+        <span className="sr-only">Loading todos...</span>
       </div>
     );
   }
 
   if (isError) {
     return (
-      <div className="alert alert-error">
+      <div className="alert alert-error" role="alert" aria-live="assertive">
         <svg
           xmlns="http://www.w3.org/2000/svg"
           className="stroke-current shrink-0 h-6 w-6"
@@ -51,33 +77,53 @@ const TodoList = () => {
 
   return (
     <div className="space-y-4">
-      <FilterTodo
-        statusFilter={statusFilter}
-        setStatusFilter={setStatusFilter}
-      />
-
+      <div className="flex flex-col md:flex-row gap-4 justify-between items-start md:items-center">
+        <FilterTodo
+          statusFilter={statusFilter}
+          setStatusFilter={setStatusFilter}
+        />
+        <SearchTodo
+          searchTerm={searchTerm}
+          setSearchTerm={setSearchTerm}
+          onSearch={handleSearch}
+        />
+      </div>
       <div className="overflow-x-auto">
         <table className="table text-[1rem] my-8">
+          <span className="sr-only">
+            List of todos with their status and user information
+          </span>{" "}
           <thead>
             <tr className="text-[18px]">
-              <th>ID</th>
-              <th>Todo</th>
-              <th>Status</th>
-              <th>User ID</th>
+              <th scope="col">ID</th>
+              <th scope="col">Todo</th>
+              <th scope="col">Status</th>
+              <th scope="col">User ID</th>
             </tr>
           </thead>
           <tbody>
             {data?.todos?.length > 0 ? (
               data.todos.map((todo) => (
                 <tr key={todo.id}>
-                  <td>{todo.id}</td>
+                  <td scope="row">{todo.id}</td>
                   <td>{todo.todo}</td>
                   <td>
                     <span
+                      aria-label={todo.completed ? "Completed" : "Pending"}
                       className={`badge ${todo.completed ? "badge-success" : "badge-warning"}`}
                     >
                       {todo.completed ? "Completed" : "Pending"}
-                      {todo.completed ? <LuCircleCheck /> : <LuClock />}
+                      {todo.completed ? (
+                        <>
+                          <LuCircleCheck />
+                          <span className="sr-only">Completed</span>
+                        </>
+                      ) : (
+                        <>
+                          <LuClock />
+                          <span className="sr-only">Pending</span>
+                        </>
+                      )}
                     </span>
                   </td>
                   <td>{todo.userId}</td>
@@ -95,14 +141,19 @@ const TodoList = () => {
       </div>
 
       {totalItems > 0 && (
-        <div className="flex justify-between items-center">
+        <div
+          className="flex justify-between items-center"
+          aria-label="Pagination"
+        >
           <div className="join">
             <button
               className="btn btn-md text-blue-600"
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
+              aria-label="Previous page"
             >
-              <RxDoubleArrowLeft size="22" />
+              <RxDoubleArrowLeft size="22" aria-hidden="true" />
+              <span className="sr-only">Previous</span>
             </button>
 
             {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
@@ -122,6 +173,8 @@ const TodoList = () => {
                   key={pageNum}
                   className={`btn btn-md ${currentPage === pageNum ? "btn-active" : ""}`}
                   onClick={() => setCurrentPage(pageNum)}
+                  aria-current={currentPage === pageNum ? "page" : undefined}
+                  aria-label={`Page ${pageNum}`}
                 >
                   {pageNum}
                 </button>
@@ -134,8 +187,10 @@ const TodoList = () => {
                 setCurrentPage((prev) => Math.min(prev + 1, totalPages))
               }
               disabled={currentPage === totalPages}
+              aria-label="Next page"
             >
               <RxDoubleArrowRight size="22" />
+              <span className="sr-only"> Next</span>
             </button>
           </div>
 

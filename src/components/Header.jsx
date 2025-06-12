@@ -7,7 +7,7 @@ const Header = () => {
     navigate({ to: "/todos" });
   };
   return (
-    <header className="flex justify-between max-w-7xl mx-auto p-4">
+    <header className="flex justify-between items-center max-w-7xl mx-auto p-4">
       <div>
         <div className="bg-blue-700 p-2 h-3 w-3 text-white rounded-full" />
         <h1 className="text-3xl">
