@@ -29,7 +29,7 @@ const TodoDetail = () => {
         type="button"
         onClick={handleBackToTodoPage}
         aria-label="Go back to the todos list"
-        className="btn  text-gray-700 flex w-auto space-x-2 bg-[#fff] border-none hover:bg-gray-500 "
+        className="btn  text-gray-700 flex w-auto space-x-2 bg-[#fff] border-none  "
       >
         <FaLongArrowAltLeft
           size="22"
