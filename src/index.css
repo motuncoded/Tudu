@@ -1,4 +1,5 @@
 @import url("https://fonts.googleapis.com/css2?family=Rock+Salt&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Edu+NSW+ACT+Cursive:wght@400..700&display=swap");
 
 @import "tailwindcss";
 @plugin "daisyui";
@@ -13,4 +14,7 @@ button {
 h1 {
   font-family: "Rock Salt", cursive;
   font-weight: 400;
+}
+.error {
+  font-family: "Edu NSW ACT Cursive", cursive;
 }
