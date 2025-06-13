@@ -1,6 +1,5 @@
-import React from "react";
+import NotFound from "../routes/NotFound";
 import Header from "./Header";
-import Footer from "./Footer";
 import { Outlet } from "@tanstack/react-router";
 
 function Layout() {

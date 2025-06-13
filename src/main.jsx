@@ -8,6 +8,7 @@ const queryClient = new QueryClient();
 
 createRoot(document.getElementById("root")).render(
   <StrictMode>
+    {/*  to allow use the quert content throughout the App */}
     <QueryClientProvider client={queryClient}>
       <App />
     </QueryClientProvider>{" "}

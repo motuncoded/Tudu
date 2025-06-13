@@ -8,6 +8,7 @@ import Home from "./routes/Home";
 import Todos from "./routes/Todos";
 import Layout from "./components/Layout";
 import TodoDetail from "./routes/TodoDetail";
+import NotFound from "./routes/NotFound";
 
 const rootRoute = createRootRoute({
   component: Layout,
@@ -30,10 +31,16 @@ const todoDetailRoute = createRoute({
   component: TodoDetail,
 });
 
+const notFoundRoute = createRoute({
+  getParentRoute: () => rootRoute,
+  path: "*",
+  component: NotFound,
+});
 const routeTree = rootRoute.addChildren([
   indexRoute,
   todosRoute,
   todoDetailRoute,
+  notFoundRoute,
 ]);
 
 export const router = createRouter({ routeTree });

@@ -1,5 +1,3 @@
-import { FaLongArrowAltLeft } from "react-icons/fa";
-// import { useNavigate } from "@tanstack/react-router";
 import TodoList from "../components/TodoList";
 
 function Todos() {
