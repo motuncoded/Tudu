@@ -7,6 +7,7 @@ import { LuCircleCheck, LuClock } from "react-icons/lu";
 import { CiHashtag } from "react-icons/ci";
 import Loader from "../components/Loader";
 import { RxPerson } from "react-icons/rx";
+import TodoError from "../components/TodoError";
 
 const TodoDetail = () => {
   const { id } = useParams({ from: "/todos/$id" });
@@ -15,7 +16,7 @@ const TodoDetail = () => {
   const navigate = useNavigate();
 
   if (isLoading) return <Loader loading="Loading Todo details" />;
-  if (isError) return <div>Error: {error.message}</div>;
+  if (isError) return <TodoError error={error.message} />;
 
   const handleBackToTodoPage = () => {
     navigate({
@@ -29,7 +30,7 @@ const TodoDetail = () => {
         type="button"
         onClick={handleBackToTodoPage}
         aria-label="Go back to the todos list"
-        className="btn  text-gray-700 flex w-auto space-x-2 bg-[#fff] border-none hover:bg-gray-500 "
+        className="btn  text-gray-700 flex w-auto space-x-2 bg-[#fff] border-none  "
       >
         <FaLongArrowAltLeft
           size="22"

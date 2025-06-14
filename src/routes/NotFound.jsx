@@ -17,7 +17,7 @@ function NotFound() {
   return (
     <div className="flex flex-col items-center justify-center min-h-[70vh]">
       <h2
-        className={`error text-[5rem] xl:text-[10rem]   transition-font-extrabold duration-500   my-8 ${bold ? "font-semibold " : "font-light"}`}
+        className={`error text-[5rem] xl:text-[10rem]  my-8 ${bold ? "font-semibold " : "font-light"}`}
       >
         404 Error
       </h2>
