@@ -77,9 +77,6 @@ const TodoList = () => {
       </div>
       <div className="overflow-x-auto">
         <table className="table text-[1rem] my-8">
-          <span className="sr-only">
-            List of todos with their status and user information
-          </span>{" "}
           <thead>
             <tr className="text-[18px]">
               <th scope="col">ID</th>
@@ -98,24 +95,20 @@ const TodoList = () => {
                       {todo.todo}
                     </Link>
                   </td>
-                  <td>
-                    <span
-                      aria-label={todo.completed ? "Completed" : "Pending"}
-                      className={`badge ${todo.completed ? "badge-success" : "badge-warning"}`}
-                    >
-                      {todo.completed ? "Completed" : "Pending"}
-                      {todo.completed ? (
-                        <>
-                          <LuCircleCheck />
-                          <span className="sr-only">Completed</span>
-                        </>
-                      ) : (
-                        <>
-                          <LuClock />
-                          <span className="sr-only">Pending</span>
-                        </>
-                      )}
-                    </span>
+                  <td
+                    aria-label={todo.completed ? "Completed" : "Pending"}
+                    className={`badge ${todo.completed ? "badge-success" : "badge-warning"}`}
+                  >
+                    {todo.completed ? "Completed" : "Pending"}
+                    {todo.completed ? (
+                      <>
+                        <LuCircleCheck />
+                      </>
+                    ) : (
+                      <>
+                        <LuClock />
+                      </>
+                    )}
                   </td>
                   <td>{todo.userId}</td>
                 </tr>
