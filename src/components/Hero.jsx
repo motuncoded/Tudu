@@ -27,7 +27,7 @@ export default function Hero() {
         return updated;
       });
       setShowModal(false);
-      navigate({ to: "/todos" });
+      navigate({ to: "/mytodo" });
     },
 
     onError: (error) => {

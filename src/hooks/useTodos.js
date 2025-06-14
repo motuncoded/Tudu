@@ -1,5 +1,5 @@
-import { useQuery } from "@tanstack/react-query";
-import { fetchTodo, fetchTodos } from "../api/todos";
+import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
+import { fetchTodo, fetchTodos, updateTodo, createTodo } from "../api/todos";
 
 export const useTodos = (page, statusFilter = "all", searchTerm = "") => {
   return useQuery({
@@ -16,5 +16,27 @@ export const useTodo = (id) => {
     queryFn: () => fetchTodo(id),
     enabled: !!id,
     retry: 2,
+  });
+};
+
+export const useCreateTodo = () => {
+  const queryClient = useQueryClient();
+
+  return useMutation({
+    mutationFn: createTodo,
+    onSuccess: () => {
+      queryClient.invalidateQueries({ queryKey: ["todos"] }); // or ["todos"]
+    },
+  });
+};
+
+export const useUpdateTodo = () => {
+  const queryClient = useQueryClient();
+  return useMutation({
+    mutationFn: ({ id, data }) => updateTodo(id, data),
+    onSuccess: (_, { id }) => {
+      queryClient.invalidateQueries({ queryKey: ["todo", id] });
+      queryClient.invalidateQueries({ queryKey: ["todos"] });
+    },
   });
 };
