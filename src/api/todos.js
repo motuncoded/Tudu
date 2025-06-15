@@ -9,7 +9,7 @@ export const localTodoStore = localforage.createInstance({
 
 export async function createTodo(todoData) {
   const newTodo = {
-    id: `local-${uuidv4()}`, // prefix helps distinguish local todos
+    id: `local-${uuidv4()}`,
     todo: todoData.title,
     completed: false,
     createdAt: new Date().toISOString(),

@@ -167,7 +167,7 @@ const TodoDetail = () => {
             </button>
           )}
           {confirmDelete ? (
-            <  >
+            <>
               <button
                 onClick={handleDelete}
                 className="btn btn-error flex items-center gap-2"

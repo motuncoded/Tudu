@@ -9,15 +9,15 @@ const Footer = () => {
   return (
     <footer className="py-2 max-w-7xl mx-auto mt-4 ">
       <div className="container mx-auto px-4 flex  justify-between items-center">
-        <div className="text-gray-700 dark:text-gray-300 text-sm md:text-base">
-          <p>© {new Date().getFullYear()} Created by Motunrayo 💙</p>
+        <div className="text-gray-700  text-base">
+          <p te>© {new Date().getFullYear()} Created by Motunrayo 💙</p>
         </div>
         <button
           onClick={handleGoBackUp}
           aria-label="Scroll to top"
-          className="mb-4 md:mb-0 p-2 rounded-full hover:bg-blue-600 hover:text-white transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-blue-500"
+          className="mb-4 md:mb-0 p-2 rounded-full bg-blue-600 text-white "
         >
-          <FaArrowUp />
+          <FaArrowUp size="22" />
         </button>
       </div>
     </footer>
