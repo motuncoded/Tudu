@@ -82,9 +82,7 @@ const TodoList = () => {
               <th scope="col">ID</th>
               <th scope="col">Todo</th>
               <th scope="col">Status</th>
-              <th scope="col" >
-                User ID
-              </th>
+              <th scope="col">User ID</th>
             </tr>
           </thead>
           <tbody>

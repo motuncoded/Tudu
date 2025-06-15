@@ -21,7 +21,7 @@ const HeroNumbers = () => {
   return (
     <section
       aria-label="Achievement metrics"
-      className="bg-gray-900 grid grid-cols-1 md:grid-cols-3 gap-6 place-items-center rounded-md p-6 xl:p-8"
+      className="bg-gray-900 grid grid-cols-1 md:grid-cols-3 gap-6 place-items-center rounded-md p-6 xl:p-8 mt-8 xl:mt-0"
     >
       <HeroNumber
         number="150+"
