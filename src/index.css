@@ -11,6 +11,9 @@ body {
 button {
   outline: none;
 }
+a {
+  text-decoration: none;
+}
 h1 {
   font-family: "Rock Salt", cursive;
   font-weight: 400;

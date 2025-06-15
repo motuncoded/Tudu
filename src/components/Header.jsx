@@ -1,11 +1,6 @@
-import { Link, useNavigate } from "@tanstack/react-router";
+import { Link } from "@tanstack/react-router";
 
 const Header = () => {
-  const navigate = useNavigate();
-
-  const handleClick = () => {
-    navigate({ to: "/todos" });
-  };
   return (
     <header className="flex justify-between items-center  p-4">
       <div>
@@ -14,12 +9,14 @@ const Header = () => {
           <Link to="/">Tudu</Link>
         </h1>
       </div>
-      <button
-        className="btn bg-transparent border-blue-700 border-2 text-blue-700 hover:bg-blue-700 hover:text-white hover:transition-opacity"
-        onClick={handleClick}
-      >
-        View todo
-      </button>
+      <nav aria-label="Main Navigation" className="space-x-4">
+        <Link
+          to="/todos"
+          className="link link:hover bg-transparent border-2 border-bg-blue-800 p-2 rounded-sm  text-blue-800 hover:bg-blue-800 hover:text-white hover:transition-opacity"
+        >
+          View todos
+        </Link>
+      </nav>
     </header>
   );
 };

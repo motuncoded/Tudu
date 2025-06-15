@@ -75,14 +75,16 @@ const TodoList = () => {
           onSearch={handleSearch}
         />
       </div>
-      <div className="overflow-x-auto">
+      <div className="-mx-4 xl:mx-0">
         <table className="table text-[1rem] my-8">
           <thead>
             <tr className="text-[18px]">
               <th scope="col">ID</th>
               <th scope="col">Todo</th>
               <th scope="col">Status</th>
-              <th scope="col">User ID</th>
+              <th scope="col" >
+                User ID
+              </th>
             </tr>
           </thead>
           <tbody>
@@ -110,7 +112,7 @@ const TodoList = () => {
                       </>
                     )}
                   </td>
-                  <td>{todo.userId}</td>
+                  <td className="">{todo.userId}</td>
                 </tr>
               ))
             ) : (
@@ -126,10 +128,10 @@ const TodoList = () => {
 
       {totalItems > 0 && (
         <div
-          className="flex justify-between items-center"
+          className="flex justify-between items-center flex-col xl:flex-row"
           aria-label="Pagination"
         >
-          <div className="join">
+          <div className="join ">
             <button
               className="btn btn-md text-blue-600"
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
@@ -178,7 +180,7 @@ const TodoList = () => {
             </button>
           </div>
 
-          <h4 className="text-center text-[1rem]">
+          <h4 className="text-center text-[1rem] mt-4 xl:mt-0">
             Page {currentPage} of {totalPages}
             {statusFilter !== "all" && ` (${totalItems} ${statusFilter} todos)`}
           </h4>
