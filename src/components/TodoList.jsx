@@ -75,7 +75,7 @@ const TodoList = () => {
           onSearch={handleSearch}
         />
       </div>
-      <div className="-mx-4 xl:mx-0">
+      <div className="-mx-6 xl:mx-0">
         <table className="table text-[1rem] my-8">
           <thead>
             <tr className="text-[18px] text-gray-800">
@@ -85,7 +85,7 @@ const TodoList = () => {
               <th scope="col">User ID</th>
             </tr>
           </thead>
-          <tbody>
+          <tbody className="text-sm xl:text-base">
             {data?.todos?.length > 0 ? (
               data.todos.map((todo) => (
                 <tr key={todo.id}>
@@ -155,7 +155,7 @@ const TodoList = () => {
               return (
                 <button
                   key={pageNum}
-                  className={`btn btn-md bg-transparent ${currentPage === pageNum ? "btn-active" : ""}`}
+                  className={`btn btn-md text-gray-700 bg-transparent ${currentPage === pageNum ? "btn-active" : ""}`}
                   onClick={() => setCurrentPage(pageNum)}
                   aria-current={currentPage === pageNum ? "page" : undefined}
                   aria-label={`Page ${pageNum}`}
