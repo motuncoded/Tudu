@@ -9,12 +9,7 @@ body {
   color: #000000;
   min-height: 100vh;
 }
-@media (prefers-color-scheme: dark) {
-  body {
-    background-color: #111;
-    color: #fff;
-  }
-}
+
 button {
   outline: none;
   border:none;
