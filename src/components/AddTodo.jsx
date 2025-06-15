@@ -22,7 +22,7 @@ const AddTodo = ({ onClose, onSubmit, isLoading }) => {
           <input
             type="text"
             id="todo-title"
-            className="input input-bordered w-full mb-4"
+            className="input input-bordered bg-transparent w-full mb-4"
             placeholder="Enter your todo"
             value={todoText}
             onChange={(e) => setTodoText(e.target.value)}
@@ -31,7 +31,7 @@ const AddTodo = ({ onClose, onSubmit, isLoading }) => {
           <div className="flex justify-end gap-2">
             <button
               type="button"
-              className="btn"
+              className="btn bg-transparent"
               onClick={onClose}
               disabled={isLoading}
             >

@@ -11,7 +11,7 @@ import {
 const Card = ({ children, className }) => {
   return (
     <div
-      className={`card bg-base-100  sm:w-96 shadow-sm p-6 hover:transition-shadow ${className}`}
+      className={`card  sm:w-96 shadow-sm p-6 hover:transition-shadow ${className}`}
     >
       {children}
     </div>
