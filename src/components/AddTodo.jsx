@@ -44,7 +44,7 @@ const AddTodo = ({ onClose, onSubmit, isLoading }) => {
             >
               {isLoading ? (
                 <>
-                  <span className="loading loading-spinner"></span>
+                  <span className="loading loading-spinner bg-black text-black"></span>
                   Adding...
                 </>
               ) : (
