@@ -12,7 +12,7 @@ const Header = () => {
       <nav aria-label="Main Navigation" className="space-x-4">
         <Link
           to="/todos"
-          className="link link:hover bg-transparent border-2 border-bg-blue-800 p-2 rounded-sm  text-blue-800 hover:bg-blue-800 hover:text-white hover:transition-opacity"
+          className="link link:hover bg-transparent border-2 border-blue-700 p-2 rounded-sm  text-blue-800 hover:bg-blue-800 hover:text-white hover:transition-opacity"
         >
           View todos
         </Link>

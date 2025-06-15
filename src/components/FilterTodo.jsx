@@ -12,7 +12,7 @@ const FilterTodo = ({ statusFilter, setStatusFilter }) => {
         aria-selected={statusFilter === "all"}
         aria-controls="all-tabpanel"
         id="all-tab"
-        className={`tab ${statusFilter === "all" ? "tab-active bg-blue-700 rounded-md text-white hover:text-white hover:bg-blue-600 transition-all" : "text-[1rem]"}`}
+        className={`tab ${statusFilter === "all" ? "tab-active bg-blue-700 rounded-md text-white hover:text-white hover:bg-blue-600 transition-all" : "text-[1rem] text-gray-700 "}`}
         onClick={() => setStatusFilter("all")}
         tabIndex={statusFilter === "all" ? 0 : -1}
       >
@@ -23,7 +23,7 @@ const FilterTodo = ({ statusFilter, setStatusFilter }) => {
         aria-selected={statusFilter === "completed"}
         aria-controls="completed-tabpanel"
         id="completed-tab"
-        className={`tab ${statusFilter === "completed" ? "tab-active bg-blue-700 rounded-md text-white  hover:text-white hover:bg-blue-600 transition-all" : "text-[1rem]"}`}
+        className={`tab ${statusFilter === "completed" ? "tab-active bg-blue-700 rounded-md text-white  hover:text-white hover:bg-blue-600 transition-all" : "text-[1rem] text-gray-700"}`}
         onClick={() => setStatusFilter("completed")}
         tabIndex={statusFilter === "completed" ? 0 : -1}
       >
@@ -34,7 +34,7 @@ const FilterTodo = ({ statusFilter, setStatusFilter }) => {
         aria-selected={statusFilter === "incomplete"}
         aria-controls="incomplete-tabpanel"
         id="incomplete-tab"
-        className={`tab ${statusFilter === "incomplete" ? "tab-active bg-blue-700 rounded-md text-white  hover:text-white hover:bg-blue-600 transition-all" : "text-[1rem]"}`}
+        className={`tab ${statusFilter === "incomplete" ? "tab-active bg-blue-700 rounded-md text-white  hover:text-white hover:bg-blue-600 transition-all" : "text-[1rem] text-gray-700"}`}
         onClick={() => setStatusFilter("incomplete")}
         tabIndex={statusFilter === "incomplete" ? 0 : -1}
       >

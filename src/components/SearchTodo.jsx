@@ -24,7 +24,7 @@ const SearchTodo = ({ searchTerm = "", setSearchTerm, onSearch }) => {
           id="search-input"
           type="text"
           placeholder="Search todos..."
-          className="input input-bordered focus:outline-none w-full md:w-64 pr-10 border-2  bg-transparent"
+          className="input input-bordered border-gray-800 focus:outline-none w-full md:w-64 pr-10 border-2  bg-transparent"
           value={searchTerm}
           onChange={handleChange}
           aria-label="Search todo"
