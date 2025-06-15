@@ -144,7 +144,7 @@ const TodoDetail = () => {
           )}
         </div>
 
-        <div className="flex gap-4 mt-6">
+        <div className="flex gap-2 xl:gap-4 mt-6">
           {isEditing ? (
             <>
               <button
@@ -162,18 +162,17 @@ const TodoDetail = () => {
               </button>
             </>
           ) : (
-            <button onClick={handleEdit} className="btn btn-primary">
+            <button onClick={handleEdit} className="btn bg-blue-800 text-white">
               Edit Todo
             </button>
           )}
           {confirmDelete ? (
-            <>
+            <  >
               <button
                 onClick={handleDelete}
                 className="btn btn-error flex items-center gap-2"
               >
                 <FaTrash />
-                Confirm Delete
               </button>
               <button
                 onClick={() => setConfirmDelete(false)}
@@ -185,7 +184,7 @@ const TodoDetail = () => {
           ) : (
             <button
               onClick={() => setConfirmDelete(true)}
-              className="btn border-primary border-2 bg-transparent hover:bg-primary hover:text-white flex items-center gap-2"
+              className="btn border-blue-800 border-2 bg-transparent hover:bg-blue-800 hover:text-white flex items-center "
             >
               <FaTrash />
               Delete Todo

@@ -11,7 +11,7 @@ import {
 const Card = ({ children, className }) => {
   return (
     <div
-      className={`card bg-base-100 w-96 shadow-sm p-6 hover:transition-shadow ${className}`}
+      className={`card bg-base-100  sm:w-96 shadow-sm p-6 hover:transition-shadow ${className}`}
     >
       {children}
     </div>
@@ -32,7 +32,7 @@ const CardContent = ({ children }) => {
 
 function HeroFeatures() {
   return (
-    <section className="container mx-auto  py-16">
+    <section className="container mx-auto  sm:py-16">
       <div className="text-center mb-12">
         <h2 className="text-3xl md:text-4xl font-bold text-gray-900 mb-4">
           Powerful Features
@@ -42,7 +42,7 @@ function HeroFeatures() {
         </p>
       </div>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-3 gap-8">
+      <div className="grid md:grid-cols-2 lg:grid-cols-3 place-items-center gap-8">
         <Card className="hover:shadow-lg transition-shadow">
           <CardHeader>
             <div className="w-12 h-12 bg-blue-100 rounded-lg flex items-center justify-center mb-4">

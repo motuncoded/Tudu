@@ -12,8 +12,8 @@ const AddTodo = ({ onClose, onSubmit, isLoading }) => {
     setTodoText("");
   };
   return (
-    <section className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50">
-      <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md">
+    <section className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-40 z-50 ">
+      <div className="bg-white rounded-lg shadow-lg p-8 w-full max-w-md mx-4">
         <h3 className="text-2xl font-bold mb-4">Add New Todo</h3>
         <form onSubmit={handleSubmit}>
           <label htmlFor="todo-title" className="sr-only">
