@@ -78,7 +78,7 @@ const TodoList = () => {
       <div className="-mx-4 xl:mx-0">
         <table className="table text-[1rem] my-8">
           <thead>
-            <tr className="text-[18px]">
+            <tr className="text-[18px] text-gray-800">
               <th scope="col">ID</th>
               <th scope="col">Todo</th>
               <th scope="col">Status</th>
@@ -115,7 +115,7 @@ const TodoList = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="4" className="text-center py-8">
+                <td colSpan="4" className="text-center py-8 text-black">
                   No todos found matching your criteria
                 </td>
               </tr>
@@ -131,7 +131,7 @@ const TodoList = () => {
         >
           <div className="join ">
             <button
-              className="btn btn-md text-blue-600"
+              className="btn btn-md bg-transparent text-blue-600"
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
               disabled={currentPage === 1}
               aria-label="Previous page"
@@ -155,7 +155,7 @@ const TodoList = () => {
               return (
                 <button
                   key={pageNum}
-                  className={`btn btn-md ${currentPage === pageNum ? "btn-active" : ""}`}
+                  className={`btn btn-md bg-transparent ${currentPage === pageNum ? "btn-active" : ""}`}
                   onClick={() => setCurrentPage(pageNum)}
                   aria-current={currentPage === pageNum ? "page" : undefined}
                   aria-label={`Page ${pageNum}`}
@@ -166,7 +166,7 @@ const TodoList = () => {
             })}
 
             <button
-              className="btn btn-md text-blue-600"
+              className="btn btn-md bg-transparent text-blue-600"
               onClick={() =>
                 setCurrentPage((prev) => Math.min(prev + 1, totalPages))
               }
