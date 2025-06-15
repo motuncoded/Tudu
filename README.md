@@ -2,7 +2,7 @@
 
 Tudu is a full-featured Todo application built using Reactjs, Tanstack query and Tanstack Router. This project is designed to showcase modern frontend engineering skills, including best practices with React, Api integration, client side routing, pagination, accessibilty and responsive uder interface.
 
-
+![Home Page](screenshots/Tudu-Desktop.png)
 Live demo: Vercel [Tudu](https://tudu-lake.vercel.app)
 
 ---
@@ -133,13 +133,24 @@ fetch('https://dummyjson.com/todos/${id}')
 
 _Replace these with actual screenshots or GIFs as desired._
 
-![Home Page](screenshots/homepage.png)
-![Todos List](screenshots/todos-list.png)
-![Todo Details](screenshots/todo-detail.png)
+![Home Page](screenshots/Tudu-Desktop.png)
+![Home Page](screenshots/Tudu-mobile.png)
+
+![Todos List](screenshots/Tudu-todo-mobile.png)
+![Todos List](screenshots/Tudu-todo-desktop.png)
+
+![Todo Details](screenshots/Tudu-todo-detail-mobile.png)
+![Todo Details](screenshots/Tudu-todo-detail-desktop.png)
+![Todo Details](screenshots/Tudu-todo-save-mobile.png)
+
 
 ---
 
 ## Known issues or limitations
+- Inability to update and delete DummyJson API
 
 
 ## Future improvements planned
+- User Authetication
+- User Authorisation to delete and update todo
+- Real time API fetching of data from Backend and not dummy API
