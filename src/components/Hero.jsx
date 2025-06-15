@@ -44,7 +44,7 @@ export default function Hero() {
   };
 
   return (
-    <section className="flex justify-center items-center flex-col text-center h-full my-30">
+    <section className="flex justify-center items-center flex-col text-center h-full my-10 xl:my-30">
       <h2 className="text-5xl xl:text-6xl max-w-4xl font-bold">
         Organize Your Tasks{" "}
         <span className=" text-blue-700 ">Like Never Before</span>
