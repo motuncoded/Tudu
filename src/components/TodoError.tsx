@@ -2,7 +2,11 @@ import React from "react";
 
 import { useNavigate } from "@tanstack/react-router";
 
-const TodoError = ({ error }) => {
+type TodoErrorProps = {
+error: string;
+}
+
+const TodoError = ({ error }: TodoErrorProps) => {
   const navigate = useNavigate();
 
   const handleBackToTodoPage = () => {

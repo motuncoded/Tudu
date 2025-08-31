@@ -1,7 +1,7 @@
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
 import { fetchTodo, fetchTodos, updateTodo, createTodo } from "../api/todos";
 
-export const useTodos = (page, statusFilter = "all", searchTerm = "") => {
+export const useTodos = (page:string, statusFilter = "all", searchTerm = "") => {
   return useQuery({
     queryKey: ["todos", page, statusFilter, searchTerm],
     queryFn: () => fetchTodos(page, statusFilter, searchTerm),
@@ -10,7 +10,7 @@ export const useTodos = (page, statusFilter = "all", searchTerm = "") => {
   });
 };
 
-export const useTodo = (id) => {
+export const useTodo = (id: string | number) => {
   return useQuery({
     queryKey: ["todo", id],
     queryFn: () => fetchTodo(id),
@@ -33,10 +33,14 @@ export const useCreateTodo = () => {
 // update Todo
 export const useUpdateTodo = () => {
   const queryClient = useQueryClient();
-  return useMutation({
+  return useMutation<
+    unknown, // replace with the actual return type of updateTodo if known
+    unknown,
+    { id: string | number; data: any }
+  >({
     mutationFn: ({ id, data }) => updateTodo(id, data),
-    onSuccess: (_, { id }) => {
-      queryClient.invalidateQueries({ queryKey: ["todo", id] });
+    onSuccess: (_, variables) => {
+      queryClient.invalidateQueries({ queryKey: ["todo", variables.id] });
       queryClient.invalidateQueries({ queryKey: ["todos"] });
     },
   });

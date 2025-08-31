@@ -1,18 +1,29 @@
 import React from "react";
 
+// Props for the ErrorBoundary component
+interface ErrorBoundaryProps {
+  children: React.ReactNode;
+}
+
+// State for the ErrorBoundary component
+interface ErrorBoundaryState {
+  hasError: boolean;
+  error: Error | null;
+}
+
 // ErrorBoundary component
-class ErrorBoundary extends React.Component {
-  constructor(props) {
+class ErrorBoundary extends React.Component<ErrorBoundaryProps, ErrorBoundaryState> {
+  constructor(props: ErrorBoundaryProps) {
     super(props);
     this.state = { hasError: false, error: null };
   }
 
-  static getDerivedStateFromError(error) {
+  static getDerivedStateFromError(error: Error): ErrorBoundaryState {
     // Update state so the next render shows the fallback UI.
     return { hasError: true, error };
   }
 
-  componentDidCatch(error, errorInfo) {
+  componentDidCatch(error: Error, errorInfo: React.ErrorInfo) {
     // You can also log the error to an error reporting service
     console.error(error, errorInfo);
   }

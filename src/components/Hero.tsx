@@ -4,42 +4,44 @@ import { useNavigate } from "@tanstack/react-router";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { createTodo } from "../api/todos";
 
+type TodoDataProps = {
+  todo: string;
+  completed: boolean;
+  userId: number;
+};
+
 export default function Hero() {
   const [showModal, setShowModal] = useState(false);
 
   const navigate = useNavigate();
-
   const queryClient = useQueryClient();
 
   const mutation = useMutation({
     mutationFn: createTodo,
     onSuccess: (newTodo) => {
-      // Update the cache manually for instant UI update since the api can accept todo
-      queryClient.setQueryData(["todos", 1, "all", ""], (previousData) => {
+      queryClient.setQueryData(["todos", 1, "all", ""], (previousData: any) => {
         if (!previousData) return previousData;
-
         const updated = {
           ...previousData,
           todos: [newTodo, ...previousData.todos.slice(0, 9)],
           total: previousData.total + 1,
         };
-        console.log("Updated todos:", updated.todos);
         return updated;
       });
       setShowModal(false);
       navigate({ to: "/todos" });
     },
-
-    onError: (error) => {
+    onError: (error: any) => {
       console.error("Error creating todo:", error.message);
     },
   });
-  const handleAddTodo = (e) => {
+
+  const handleAddTodo = (e: React.MouseEvent<HTMLButtonElement>) => {
     e.preventDefault();
     setShowModal(true);
   };
 
-  const handleSubmitTodo = (todoData) => {
+  const handleSubmitTodo = (todoData: TodoDataProps) => {
     mutation.mutate(todoData);
   };
 

@@ -5,18 +5,32 @@ import { RxDoubleArrowLeft, RxDoubleArrowRight } from "react-icons/rx";
 import FilterTodo from "./FilterTodo";
 import { LuCircleCheck, LuClock } from "react-icons/lu";
 import SearchTodo from "./SearchTodo";
-import Loader from "../components/Loader";
+import Loader from "./Loader";
+
+
 
 const TodoList = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [statusFilter, setStatusFilter] = useState("all");
+  const [statusFilter, setStatusFilter] = useState<"all" | "completed" | "incomplete">("all");
   const [searchTerm, setSearchTerm] = useState("");
+
+  type Todo = {
+    id: number;
+    todo: string;
+    completed: boolean;
+    userId: number;
+  };
+
+  type TodosResponse = {
+    todos: Todo[];
+    total: number;
+  };
 
   const { data, isLoading, isError, error } = useTodos(
     currentPage,
     statusFilter,
     searchTerm.trim(),
-  );
+  ) as { data: TodosResponse | undefined; isLoading: boolean; isError: boolean; error: any };
 
   // Reset to page 1 when filter changes
   useEffect(() => {
@@ -24,7 +38,7 @@ const TodoList = () => {
   }, [statusFilter, searchTerm]);
 
   //
-  const handleSearch = (e) => {
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearchTerm(value);
 
@@ -86,7 +100,7 @@ const TodoList = () => {
             </tr>
           </thead>
           <tbody className="text-sm xl:text-base">
-            {data?.todos?.length > 0 ? (
+            {data?.todos && data.todos.length > 0 ? (
               data.todos.map((todo) => (
                 <tr key={todo.id}>
                   <td scope="row">{todo.id}</td>
@@ -115,7 +129,7 @@ const TodoList = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="4" className="text-center py-8 text-black">
+                <td colSpan={4} className="text-center py-8 text-black">
                   No todos found matching your criteria
                 </td>
               </tr>
@@ -189,3 +203,4 @@ const TodoList = () => {
 };
 
 export default TodoList;
+  

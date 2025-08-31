@@ -1,10 +1,25 @@
 import React, { useState } from "react";
 import PropTypes from "prop-types";
 
-const AddTodo = ({ onClose, onSubmit, isLoading }) => {
+// Interface for Todo data
+interface TodoData {
+  title: string;
+  id?: string;
+  completed?: boolean;
+}
+
+
+//
+interface AddTodoProps {
+  onClose: () => void;
+  onSubmit: (data: TodoData) => void;
+  isLoading: boolean;
+}
+
+const AddTodo : React.FC<AddTodoProps> = ({ onClose, onSubmit, isLoading = false }) => {
   const [todoText, setTodoText] = useState("");
 
-  const handleSubmit = (e) => {
+  const handleSubmit = (e: React.FormEvent<HTMLFormElement>) => {
     e.preventDefault();
     onSubmit({
       title: todoText,
