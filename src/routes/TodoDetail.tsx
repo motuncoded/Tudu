@@ -40,7 +40,7 @@ const TodoDetail = () => {
       await updateTodo(todo.id, updated);
       window.location.reload(); // Or refetch with a query invalidation
     } catch (err) {
-      alert("Cannot add Todo", err);
+      alert(`Cannot add Todo: ${err}`);
     } finally {
       setIsSaving(false);
       setIsEditing(false);
@@ -52,7 +52,7 @@ const TodoDetail = () => {
       await deleteTodo(todo.id);
       navigate({ to: "/todos" });
     } catch (err) {
-      alert("failed to delete the todo. Please try again", err);
+      alert(`failed to delete the todo. Please try again: ${err}`);
     }
   };
 

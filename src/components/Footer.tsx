@@ -1,7 +1,7 @@
 import React from "react";
 import { FaArrowUp } from "react-icons/fa";
 
-const Footer = () => {
+const Footer: React.FC = () => {
   const handleGoBackUp = () => {
     window.scrollTo({ top: 0, behavior: "smooth" });
   };
@@ -10,7 +10,7 @@ const Footer = () => {
     <footer className="py-2 max-w-7xl mx-auto mt-4 ">
       <div className="container mx-auto px-4 flex  justify-between items-center">
         <div className="text-gray-700  text-base">
-          <p te>© {new Date().getFullYear()} Created by Motunrayo 💙</p>
+          <p>© {new Date().getFullYear()} Created by Motunrayo 💙</p>
         </div>
         <button
           onClick={handleGoBackUp}

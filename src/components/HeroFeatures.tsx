@@ -8,7 +8,14 @@ import {
   FaMobileAlt,
 } from "react-icons/fa";
 
-const Card = ({ children, className }) => {
+
+
+interface CardProps {
+  children: React.ReactNode;
+  className?: string;
+}
+
+const Card = ({ children, className }: CardProps) => {
   return (
     <div
       className={`card  sm:w-96 shadow-sm p-6 hover:transition-shadow ${className}`}
@@ -18,15 +25,15 @@ const Card = ({ children, className }) => {
   );
 };
 
-const CardHeader = ({ children }) => {
+const CardHeader: React.FC<{children: React.ReactNode}> = ({ children }) => {
   return <div className="card-header">{children}</div>;
 };
 
-const CardTitle = ({ children }) => {
+const CardTitle: React.FC<{children: React.ReactNode}> = ({ children }) => {
   return <h2 className="card-title">{children}</h2>;
 };
 
-const CardContent = ({ children }) => {
+const CardContent: React.FC<{children: React.ReactNode}> = ({ children }) => {
   return <div className="card-content">{children}</div>;
 };
 

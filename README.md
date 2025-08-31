@@ -131,14 +131,10 @@ fetch("https://dummyjson.com/todos/${id}")
 _Replace these with actual screenshots or GIFs as desired._
 
 ![Home Page](screenshots/Tudu-Desktop.png)
-![Home Page](screenshots/Tudu-mobile.png)
 
-![Todos List](screenshots/Tudu-todo-mobile.png)
 ![Todos List](screenshots/Tudu-todo-desktop.png)
 
-![Todo Details](screenshots/Tudu-todo-detail-mobile.png)
 ![Todo Details](screenshots/Tudu-todo-detail-desktop.png)
-![Todo Details](screenshots/Tudu-todo-save-mobile.png)
 
 ---
 

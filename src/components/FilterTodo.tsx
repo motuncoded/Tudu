@@ -1,13 +1,19 @@
 import React from "react";
 
-const FilterTodo = ({ statusFilter, setStatusFilter }) => {
+interface FilterTodoProps {
+  statusFilter: "all" | "completed" | "incomplete";
+  setStatusFilter: (status: "all" | "completed" | "incomplete") => void;
+}
+
+const FilterTodo: React.FC<FilterTodoProps> = ({ statusFilter, setStatusFilter }) => {
+  const statuses: Array<"all" | "completed" | "incomplete"> = ["all", "completed", "incomplete"];
   return (
     <div
       role="tablist"
       aria-label="Todo status filters"
       className="tabs tabs-boxed bg-gray-100"
     >
-      {["all", "completed", "incomplete"].map((status) => (
+      {statuses.map((status) => (
         <button
           key={status}
           role="tab"
