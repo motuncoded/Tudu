@@ -1,4 +1,3 @@
-import NotFound from "../routes/NotFound";
 import Header from "./Header";
 import { Outlet } from "@tanstack/react-router";
 

@@ -1,153 +1,40 @@
-# Tudu
+This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/pages/api-reference/create-next-app).
 
-Tudu is a full-featured Todo application built using Reactjs, Tanstack query and Tanstack Router. This project is designed to showcase modern frontend engineering skills, including best practices with React, Api integration, client side routing, pagination, accessibilty and responsive uder interface.
+## Getting Started
 
-![Home Page](screenshots/Tudu-Desktop.png)
-Live demo: Vercel [Tudu](https://tudu-lake.vercel.app)
+First, run the development server:
 
----
-
-## Features
-
-- Fetch and display todos from ([DummyJSON](<https://dummyjson.com/todos)>))
-- Client -side pagination which included 10 todo items per page
-- Dispaly of Individual todo details such as todo title, status and userID
-- Searching a list of todo with its title
-- Filtering by completion status (All/ Complete / Incomplete)
-- Nested Routing for todo detail view
-- Acessible and responsive UI
-
----
-
-## Installation & Setup Instruction
-
-1. **Clone the repository**
-
-   ```bash
-   git clone https://github.com/motuncoded/Tudu.git
-   cd Tudu
-   ```
-
-2. **Install dependencies**
-
-   ```bash
-   npm install
-   # or
-   yarn install
-   ```
-
-3. **Start the development server**
-
-   ```bash
-   npm run dev
-   # or
-   yarn dev
-   ```
-
-4. **Build for production**
-   ```bash
-   npm run build
-   # or
-   yarn build
-   ```
-
----
-
-## Available scripts and commands
-
-| Command                   | Description                      |
-| ------------------------- | -------------------------------- |
-| `dev : vite`              | Start the development server     |
-| `build : vite build`      | Build the project for production |
-| `lint : eslint .`         | Run ESLint for code quality      |
-| `preview : vite preview ` | Preview the production build     |
-
-## Technology Stack & Architecture
-
-- **React**: Core UI library (v19.x)
-- **Vite**: Fast build tool and dev server
-- **React Tanstack Router**: Client-side routing
-- **TailwindCSS**: Utility-first CSS framework
-- **ESLint**: Linting and code quality
-- **DaisyUI**: Prebuilt TailwindCSS components
-- **React Icons**: Set of icons
-- **React Tanstack Query**: handles the API
-
-**Architecture Decisions**:
-
-- Modular component structure for maintainability
-- API-calling logic separated from UI components
-- Uses React Router for nested routes (e.g., `/todos/:id` for details and `/todos` for list of todos)
-- TailwindCSS for rapid and consistent design
-- Daily UI with faster design template
-- Icons served by react icons
-
-## API Documentation & Usage
-
-### Fetch Todos
-
-- **Endpoint**: `GET https://dummyjson.com/todos`
-- **Pagination**: 10 items per page using query params
-- **Todo Object**:
-  ```json
-  {
-    "id": 1,
-    "todo": "Do the laundry",
-    "completed": false,
-    "userId": 5
-  }
-  ```
-
-### Example Usage
-
-- Fetch api calls using custom hooks
-
-```js
-fetch("https://dummyjson.com/todos?limit=10&skip=0")
-  .then((res) => res.json())
-  .then((data) => setTodos(data.todos));
+```bash
+npm run dev
+# or
+yarn dev
+# or
+pnpm dev
+# or
+bun dev
 ```
 
-- Filters and pagination are handled on the client side.
+Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
 
-```js
-fetch("https://dummyjson.com/todos?limit=150")
-  .then((res) => res.json())
-  .then((data) => setTodos(data.todos));
-```
+You can start editing the page by modifying `pages/index.tsx`. The page auto-updates as you edit the file.
 
-- Clicking on a todo navigates to `/todos/:id` to show detailed info.
+[API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) can be accessed on [http://localhost:3000/api/hello](http://localhost:3000/api/hello). This endpoint can be edited in `pages/api/hello.ts`.
 
-```js
-fetch("https://dummyjson.com/todos/${id}")
-  .then((res) => res.json())
-  .then((data) => setTodos(data.todos));
-```
+The `pages/api` directory is mapped to `/api/*`. Files in this directory are treated as [API routes](https://nextjs.org/docs/pages/building-your-application/routing/api-routes) instead of React pages.
 
----
+This project uses [`next/font`](https://nextjs.org/docs/pages/building-your-application/optimizing/fonts) to automatically optimize and load [Geist](https://vercel.com/font), a new font family for Vercel.
 
-## Screenshots
+## Learn More
 
-_Replace these with actual screenshots or GIFs as desired._
+To learn more about Next.js, take a look at the following resources:
 
-![Home Page](screenshots/Tudu-Desktop.png)
-![Home Page](screenshots/Tudu-mobile.png)
+- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
+- [Learn Next.js](https://nextjs.org/learn-pages-router) - an interactive Next.js tutorial.
 
-![Todos List](screenshots/Tudu-todo-mobile.png)
-![Todos List](screenshots/Tudu-todo-desktop.png)
+You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
 
-![Todo Details](screenshots/Tudu-todo-detail-mobile.png)
-![Todo Details](screenshots/Tudu-todo-detail-desktop.png)
-![Todo Details](screenshots/Tudu-todo-save-mobile.png)
+## Deploy on Vercel
 
----
+The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
 
-## Known issues or limitations
-
-- Inability to update and delete DummyJson API
-
-## Future improvements planned
-
-- User Authetication
-- User Authorisation to delete and update todo
-- Real time API fetching of data from Backend and not dummy API
+Check out our [Next.js deployment documentation](https://nextjs.org/docs/pages/building-your-application/deploying) for more details.

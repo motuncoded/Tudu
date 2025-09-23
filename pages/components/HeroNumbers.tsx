@@ -1,6 +1,13 @@
 import React from "react";
+interface HeroNumberProps {
+  number: string;
+  words: string;
+  styles: string;
+  id: string;
+}
 
-const HeroNumber = ({ number, words, styles, id }) => {
+
+const HeroNumber = ({ number, words, styles, id }:  HeroNumberProps) => {
   return (
     <div className="text-center" aria-labelledby={id}>
       <h2

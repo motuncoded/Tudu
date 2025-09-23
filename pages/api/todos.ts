@@ -7,7 +7,7 @@ export const localTodoStore = localforage.createInstance({
   storeName: "localTodos",
 });
 
-export async function createTodo(todoData) {
+export async function createTodo(todoData : { title: string }) {
   const newTodo = {
     id: `local-${uuidv4()}`,
     todo: todoData.title,
@@ -76,7 +76,7 @@ export const fetchTodos = async (
     // status filter
     if (statusFilter !== "all") {
       const completedStatus = statusFilter === "completed";
-      todos = todos.filter((todo) => todo.completed === completedStatus);
+      todos = todos.filter((todo:) => todo.completed === completedStatus);
     }
 
     // search filter
