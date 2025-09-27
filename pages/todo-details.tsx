@@ -1,28 +1,75 @@
 import React, { useState } from "react";
-import { useParams, useNavigate } from "@tanstack/react-router";
-import { useTodo } from "../hooks/useTodos";
-import { updateTodo } from "../api/todos"; // Add this import
+import { useRouter } from "next/router";
 import { FaLongArrowAltLeft, FaTrash } from "react-icons/fa";
 import { LuCircleCheck, LuClock } from "react-icons/lu";
 import { CiHashtag } from "react-icons/ci";
-import Loader from "../components/Loader";
 import { RxPerson } from "react-icons/rx";
-import TodoError from "../components/TodoError";
-import { deleteTodo } from "../api/todos";
+import Loader from "./components/Loader";
+import TodoError from "./components/TodoError";
 
-const TodoDetail = () => {
-  const { id } = useParams({ from: "/todos/$id" });
-  const { data: todo, isLoading, isError, error } = useTodo(id);
-  const navigate = useNavigate();
+// Define the Todo type
+interface Todo {
+  id: string;
+  todo: string;
+  completed: boolean;
+  userId: string;
+}
 
+// Define the hook return type
+interface UseTodoResult {
+  data: Todo | undefined;
+  isLoading: boolean;
+  isError: boolean;
+  error: { message: string } | null;
+}
+
+// Define props for the component (if using getServerSideProps)
+interface TodoDetailProps {
+  todo?: Todo;
+}
+
+// Mock API functions - replace with your actual implementations
+const updateTodo = async (id: string, updated: Partial<Todo>): Promise<void> => {
+  // Your updateTodo implementation
+};
+
+const deleteTodo = async (id: string): Promise<void> => {
+  // Your deleteTodo implementation
+};
+
+// Mock hook - replace with your actual useTodo implementation
+const useTodo = (id: string): UseTodoResult => {
+  // Your useTodo implementation
+  return {
+    data: undefined,
+    isLoading: false,
+    isError: false,
+    error: null
+  };
+};
+
+const TodoDetail: React.FC<TodoDetailProps> = ({ todo: initialTodo }) => {
+  const router = useRouter();
+  const { id } = router.query;
+  
+  // Use the initialTodo prop if available, otherwise use the hook
+  const todoResult = useTodo(id as string);
+  const todo = initialTodo || todoResult.data;
+  
   const [isEditing, setIsEditing] = useState(false);
   const [editedTitle, setEditedTitle] = useState("");
   const [editedStatus, setEditedStatus] = useState(false);
   const [isSaving, setIsSaving] = useState(false);
   const [confirmDelete, setConfirmDelete] = useState(false);
 
+  // Use loading state from hook if no initial data
+  const isLoading = !initialTodo && todoResult.isLoading;
+  const isError = !initialTodo && todoResult.isError;
+  const error = todoResult.error;
+
   if (isLoading) return <Loader loading="Loading Todo details" />;
-  if (isError) return <TodoError error={error.message} />;
+  if (isError) return <TodoError error={error?.message || "An error occurred"} />;
+  if (!todo) return <TodoError error="Todo not found" />;
 
   const handleEdit = () => {
     setIsEditing(true);
@@ -38,9 +85,10 @@ const TodoDetail = () => {
         completed: editedStatus,
       };
       await updateTodo(todo.id, updated);
-      window.location.reload(); // Or refetch with a query invalidation
+      // For Next.js, you might want to use router.reload() or update the cache
+      router.reload();
     } catch (err) {
-      alert("Cannot add Todo", err);
+      alert(`Cannot update Todo: ${err}`);
     } finally {
       setIsSaving(false);
       setIsEditing(false);
@@ -50,17 +98,21 @@ const TodoDetail = () => {
   const handleDelete = async () => {
     try {
       await deleteTodo(todo.id);
-      navigate({ to: "/todos" });
+      router.push("/todos");
     } catch (err) {
-      alert("failed to delete the todo. Please try again", err);
+      alert(`Failed to delete the todo. Please try again: ${err}`);
     }
+  };
+
+  const handleBack = () => {
+    router.push("/todos");
   };
 
   return (
     <main className="max-w-7xl mx-auto my-10 p-6 " aria-label="todo detail">
       <button
         type="button"
-        onClick={() => navigate({ to: "/todos" })}
+        onClick={handleBack}
         aria-label="Go back to the todos list"
         className="btn text-gray-700 flex w-auto space-x-2 bg-[#fff] border-none"
       >
@@ -173,6 +225,7 @@ const TodoDetail = () => {
                 className="btn btn-error flex items-center gap-2"
               >
                 <FaTrash />
+                Confirm Delete
               </button>
               <button
                 onClick={() => setConfirmDelete(false)}

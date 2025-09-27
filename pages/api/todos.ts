@@ -1,20 +1,34 @@
 import localforage from "localforage";
 import { v4 as uuidv4 } from "uuid";
 
+// Define types
+interface Todo {
+  id: string;
+  todo: string;
+  completed: boolean;
+  createdAt: string;
+  userId: number;
+  isLocal?: boolean;
+}
+
+interface TodoInput {
+  title: string;
+}
+
 // LocalForage instance
 export const localTodoStore = localforage.createInstance({
   name: "tuduApp",
   storeName: "localTodos",
 });
 
-export async function createTodo(todoData : { title: string }) {
-  const newTodo = {
+export async function createTodo(todoData: TodoInput): Promise<Todo> {
+  const newTodo: Todo = {
     id: `local-${uuidv4()}`,
     todo: todoData.title,
     completed: false,
     createdAt: new Date().toISOString(),
     userId: 1,
-    isLocal: true, // to help identify later
+    isLocal: true,
   };
 
   try {
@@ -29,12 +43,9 @@ export async function createTodo(todoData : { title: string }) {
     }
 
     const data = await response.json();
-
-    // Optionally still save locally for persistence
     await localTodoStore.setItem(newTodo.id, { ...newTodo, ...data });
     return { ...newTodo, ...data };
-  } catch (err) {
-    // Fallback to local-only
+  } catch (err: any) {
     console.log("Saving todo locally due to server failure:", err.message);
     await localTodoStore.setItem(newTodo.id, newTodo);
     return newTodo;
@@ -42,15 +53,14 @@ export async function createTodo(todoData : { title: string }) {
 }
 
 export const fetchTodos = async (
-  page = 1,
-  statusFilter = "all",
-  searchTerm = "",
+  page: number = 1,
+  statusFilter: string = "all",
+  searchTerm: string = ""
 ) => {
   const limit = 10;
   const skip = (page - 1) * limit;
 
   try {
-    // For "all" status with no search
     if (statusFilter === "all" && !searchTerm) {
       const response = await fetch(
         `https://dummyjson.com/todos?limit=${limit}&skip=${skip}`,
@@ -66,20 +76,18 @@ export const fetchTodos = async (
       };
     }
 
-    // For all completed and pending - using cliend side pagination
     const response = await fetch(`https://dummyjson.com/todos?limit=150`);
     if (!response.ok)
       throw new Error(`API request failed with status ${response.status}`);
 
-    let todos = (await response.json()).todos;
+    let todos: Todo[] = (await response.json()).todos;
 
-    // status filter
+    // FIXED: Removed the colon after todo parameter
     if (statusFilter !== "all") {
       const completedStatus = statusFilter === "completed";
-      todos = todos.filter((todo:) => todo.completed === completedStatus);
+      todos = todos.filter((todo) => todo.completed === completedStatus);
     }
 
-    // search filter
     if (searchTerm) {
       const searchLower = searchTerm.toLowerCase();
       todos = todos.filter((todo) =>
@@ -87,7 +95,6 @@ export const fetchTodos = async (
       );
     }
 
-    // Client side  pagination
     const paginatedTodos = todos.slice(skip, skip + limit);
 
     return {
@@ -96,50 +103,49 @@ export const fetchTodos = async (
       page,
       limit,
     };
-  } catch (error) {
+  } catch (error: any) {
     console.error("Error fetching todos:", error);
     throw new Error(`Failed to fetch todos: ${error.message}`);
   }
 };
 
 // fetch the individual todo
-export const fetchTodo = async (id) => {
+export const fetchTodo = async (id: string): Promise<Todo> => {
   const response = await fetch(`https://dummyjson.com/todos/${id}`);
   if (!response.ok) throw new Error("Todo not found");
   return response.json();
 };
 
-// fetch the recent todo item
-
-export async function updateTodo(id, updateData) {
+export async function updateTodo(id: string, updateData: Partial<Todo>): Promise<Todo> {
   try {
     const response = await fetch(`https://dummyjson.com/todos/${id}`, {
-      method: "POST",
+      method: "PUT", // Changed to PUT for updates
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updateData),
     });
     if (!response.ok) throw new Error("Failed to update todo on server");
     return response.json();
-  } catch (err) {
-    const todo = await localTodoStore.getItem(id);
+  } catch (err: any) {
+    const todo = await localTodoStore.getItem(id) as Todo;
     if (todo?.isLocal) {
-      const updateTodo = { ...todo, ...updateData };
-      await localTodoStore.setItem(id, updateTodo);
-      return updateTodo;
+      const updatedTodo = { ...todo, ...updateData };
+      await localTodoStore.setItem(id, updatedTodo);
+      return updatedTodo;
     } else {
       throw err;
     }
   }
 }
 
-export async function deleteTodo(id) {
+export async function deleteTodo(id: string): Promise<{ id: string; deleteFrom?: string }> {
   try {
-    const localTodo = await localTodoStore.getItem(id);
+    const localTodo = await localTodoStore.getItem(id) as Todo;
 
     if (localTodo?.isLocal) {
       await localTodoStore.removeItem(id);
       return { id, deleteFrom: "local" };
     }
+    
     const response = await fetch(`https://dummyjson.com/todos/${id}`, {
       method: "DELETE",
     });
@@ -147,7 +153,8 @@ export async function deleteTodo(id) {
       throw new Error("Failed to delete todo");
     }
     return response.json();
-  } catch (err) {
+  } catch (err: any) {
     console.error("Delete failed", err.message);
+    throw err;
   }
 }

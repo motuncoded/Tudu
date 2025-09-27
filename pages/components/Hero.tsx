@@ -12,6 +12,8 @@ export type Todo = {
   title: string;
   description?: string;
   // add other fields as needed
+  completed?: boolean;
+  userId?: string;
 };
 
 // Define the data you send to the API when creating a todo
@@ -19,6 +21,14 @@ export type TodoInput = {
   title: string;
   description?: string;
   // include any other fields required by your API
+  completed?: boolean;
+  userId?: string;
+};
+
+// Define error type
+type ErrorType = {
+  message: string;
+  // Add other error properties as needed
 };
 
 export default function Hero() {
@@ -27,14 +37,21 @@ export default function Hero() {
   const router = useRouter();
   const queryClient = useQueryClient();
 
-  const mutation = useMutation<Todo, unknown, TodoInput>({
+  const mutation = useMutation<Todo, ErrorType, TodoInput>({
     mutationFn: createTodo,
     onSuccess: (newTodo) => {
       // Update the cache manually for instant UI update
       queryClient.setQueryData<{ todos: Todo[]; total: number }>(
         ["todos", 1, "all", ""],
         (previousData) => {
-          if (!previousData) return previousData;
+          if (!previousData) {
+            // Return a default structure if no previous data exists
+            return {
+              todos: [newTodo],
+              total: 1
+            };
+          }
+          
           const updated = {
             ...previousData,
             todos: [newTodo, ...previousData.todos.slice(0, 9)],
@@ -47,20 +64,26 @@ export default function Hero() {
       setShowModal(false);
       router.push("/todos"); // navigate to /todos
     },
-    onError: (error: unknown) => {
+    onError: (error: ErrorType) => {
       // Normalize error shape; adapt if using Axios or other libs
-      
+      console.error("Error creating todo:", error.message);
+      // You can add toast notifications or other error handling here
     },
   });
 
-  const handleAddTodo = (e: React.MouseEvent | React.FormEvent) => {
-    // If using a form element, keep the type broad
+  const handleAddTodo = (e: React.MouseEvent) => {
     e.preventDefault();
     setShowModal(true);
   };
 
   const handleSubmitTodo = (todoData: TodoInput) => {
     mutation.mutate(todoData);
+  };
+
+  const handleCloseModal = () => {
+    setShowModal(false);
+    // Optionally reset mutation state when closing modal
+    mutation.reset();
   };
 
   return (
@@ -84,7 +107,7 @@ export default function Hero() {
       </button>
       {showModal && (
         <AddTodo
-          onClose={() => setShowModal(false)}
+          onClose={handleCloseModal}
           onSubmit={handleSubmitTodo}
           isLoading={mutation.isPending}
           error={mutation.error}

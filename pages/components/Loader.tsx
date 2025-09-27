@@ -1,6 +1,10 @@
-import React from "react";
+import React from 'react';
 
-const Loader = ({ loading }) => {
+interface LoaderProps {
+  loading: string;
+}
+
+const Loader: React.FC<LoaderProps> = ({ loading }) => {
   return (
     <div
       className="flex justify-center items-center h-64"

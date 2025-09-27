@@ -1,11 +1,24 @@
 import React, { useState, useEffect } from "react";
-import { Link } from "@tanstack/react-router";
+import Link from "next/link";
+import { useRouter } from "next/navigation";
 import { useTodos } from "../hooks/useTodos";
 import { RxDoubleArrowLeft, RxDoubleArrowRight } from "react-icons/rx";
 import FilterTodo from "./FilterTodo";
 import { LuCircleCheck, LuClock } from "react-icons/lu";
 import SearchTodo from "./SearchTodo";
 import Loader from "../components/Loader";
+
+interface Todo {
+  id: number;
+  todo: string;
+  completed: boolean;
+  userId: number;
+}
+
+interface TodosData {
+  todos: Todo[];
+  total: number;
+}
 
 const TodoList = () => {
   const [currentPage, setCurrentPage] = useState(1);
@@ -18,13 +31,14 @@ const TodoList = () => {
     searchTerm.trim(),
   );
 
+  const router = useRouter();
+
   // Reset to page 1 when filter changes
   useEffect(() => {
     setCurrentPage(1);
   }, [statusFilter, searchTerm]);
 
-  //
-  const handleSearch = (e) => {
+  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearchTerm(value);
 
@@ -54,12 +68,13 @@ const TodoList = () => {
             d="M10 14l2-2m0 0l2-2m-2 2l-2-2m2 2l2 2m7-2a9 9 0 11-18 0 9 9 0 0118 0z"
           />
         </svg>
-        <span>Error: {error.message}</span>
+        <span>Error: {error?.message || "An error occurred"}</span>
       </div>
     );
   }
 
-  const totalItems = data?.total || 0;
+  const todosData = data as TodosData | undefined;
+  const totalItems = todosData?.total || 0;
   const totalPages = Math.ceil(totalItems / 10);
 
   return (
@@ -86,12 +101,15 @@ const TodoList = () => {
             </tr>
           </thead>
           <tbody className="text-sm xl:text-base">
-            {data?.todos?.length > 0 ? (
-              data.todos.map((todo) => (
+            {todosData?.todos && todosData.todos.length > 0 ? (
+              todosData.todos.map((todo) => (
                 <tr key={todo.id}>
                   <td scope="row">{todo.id}</td>
                   <td>
-                    <Link to="/todos/$id" params={{ id: todo.id }}>
+                    <Link 
+                      href={`/todos/${todo.id}`}
+                      className="text-blue-600 hover:text-blue-800 hover:underline"
+                    >
                       {todo.todo}
                     </Link>
                   </td>
@@ -101,13 +119,9 @@ const TodoList = () => {
                   >
                     {todo.completed ? "Completed" : "Pending"}
                     {todo.completed ? (
-                      <>
-                        <LuCircleCheck />
-                      </>
+                      <LuCircleCheck aria-hidden="true" />
                     ) : (
-                      <>
-                        <LuClock />
-                      </>
+                      <LuClock aria-hidden="true" />
                     )}
                   </td>
                   <td className="">{todo.userId}</td>
@@ -115,7 +129,7 @@ const TodoList = () => {
               ))
             ) : (
               <tr>
-                <td colSpan="4" className="text-center py-8 text-black">
+                <td colSpan={4} className="text-center py-8 text-black">
                   No todos found matching your criteria
                 </td>
               </tr>
@@ -129,7 +143,7 @@ const TodoList = () => {
           className="flex justify-between items-center flex-col xl:flex-row"
           aria-label="Pagination"
         >
-          <div className="join ">
+          <div className="join">
             <button
               className="btn btn-md bg-transparent text-blue-600"
               onClick={() => setCurrentPage((prev) => Math.max(prev - 1, 1))}
@@ -141,7 +155,7 @@ const TodoList = () => {
             </button>
 
             {Array.from({ length: Math.min(5, totalPages) }, (_, i) => {
-              let pageNum;
+              let pageNum: number;
               if (totalPages <= 5) {
                 pageNum = i + 1;
               } else if (currentPage <= 3) {
@@ -173,8 +187,8 @@ const TodoList = () => {
               disabled={currentPage === totalPages}
               aria-label="Next page"
             >
-              <RxDoubleArrowRight size="22" />
-              <span className="sr-only"> Next</span>
+              <RxDoubleArrowRight size="22" aria-hidden="true" />
+              <span className="sr-only">Next</span>
             </button>
           </div>
 

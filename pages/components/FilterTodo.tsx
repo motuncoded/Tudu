@@ -1,23 +1,30 @@
 import React from "react";
 
-const FilterTodo = ({ statusFilter, setStatusFilter }) => {
+interface FilterTodoProps {
+  statusFilter: "all" | "completed" | "incomplete";
+  setStatusFilter: (status: "all" | "completed" | "incomplete") => void;
+}
+
+const FilterTodo: React.FC<FilterTodoProps> = ({ statusFilter, setStatusFilter }) => {
+  const statusOptions: ("all" | "completed" | "incomplete")[] = ["all", "completed", "incomplete"];
+
   return (
     <div
       role="tablist"
       aria-label="Todo status filters"
       className="tabs tabs-boxed bg-gray-100"
     >
-      {["all", "completed", "incomplete"].map((status) => (
+      {statusOptions.map((status) => (
         <button
           key={status}
           role="tab"
           aria-selected={statusFilter === status}
           aria-controls={`${status}-tabpanel`}
           id={`${status}-tab`}
-          className={`tab transition-all rounded-md ${
+          className={`tab transition-all rounded-md w-22 mx-2 ${
             statusFilter === status
-              ? "tab-active bg-blue-700 text-white hover:bg-blue-600"
-              : " text-gray-800 hover:text-blue-700"
+              ? "tab-active bg-blue-700 text-white hover:bg-blue-600 "
+              : " hover:text-blue-700"
           }`}
           onClick={() => setStatusFilter(status)}
           tabIndex={statusFilter === status ? 0 : -1}

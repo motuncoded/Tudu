@@ -1,13 +1,12 @@
 import Header from "./Header";
-import { Outlet } from "@tanstack/react-router";
 
-function Layout() {
+function Layout({children}: {children: React.ReactNode}) {
   return (
     <div className="max-w-7xl mx-auto">
       <Header />
       <main className="flex-grow">
-        <Outlet />
-      </main>
+{children}      
+</main>
     </div>
   );
 }

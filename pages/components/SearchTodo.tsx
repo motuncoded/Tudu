@@ -1,8 +1,18 @@
 import React from "react";
 import { FaTimes } from "react-icons/fa";
 
-const SearchTodo = ({ searchTerm = "", setSearchTerm, onSearch }) => {
-  const handleChange = (e) => {
+interface SearchTodoProps {
+  searchTerm?: string;
+  setSearchTerm: (term: string) => void;
+  onSearch: (e: React.FormEvent | { preventDefault: () => void; target: { value: string } }) => void;
+}
+
+const SearchTodo: React.FC<SearchTodoProps> = ({ 
+  searchTerm = "", 
+  setSearchTerm, 
+  onSearch 
+}) => {
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
     setSearchTerm(value);
     // Call onSearch immediately with the new value
@@ -14,6 +24,7 @@ const SearchTodo = ({ searchTerm = "", setSearchTerm, onSearch }) => {
     // Trigger search with empty value to reset
     onSearch({ preventDefault: () => {}, target: { value: "" } });
   };
+
   return (
     <form className="w-full md:w-auto">
       <div className="relative flex items-center" role="search">
@@ -24,7 +35,7 @@ const SearchTodo = ({ searchTerm = "", setSearchTerm, onSearch }) => {
           id="search-input"
           type="text"
           placeholder="Search todos..."
-          className="input input-bordered border-gray-800 focus:outline-none w-full md:w-64 pr-10 border-2  bg-transparent"
+          className="input input-bordered border-gray-800 focus:outline-none w-full md:w-64 pr-10 border-2 bg-transparent"
           value={searchTerm}
           onChange={handleChange}
           aria-label="Search todo"

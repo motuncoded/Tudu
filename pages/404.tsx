@@ -1,9 +1,9 @@
 import React, { useState, useEffect } from "react";
-import { useNavigate } from "@tanstack/react-router";
+  import { useRouter } from 'next/router';
 
 // notFound Page
 function NotFound() {
-  const navigate = useNavigate();
+  const router = useRouter();
   const [bold, setBold] = useState(true);
 
   // interval to render the font weight
@@ -14,6 +14,11 @@ function NotFound() {
     return () => clearInterval(interval);
   });
 
+    const handleGoHome = (): void => {
+    router.push("/");
+  };
+
+ 
   return (
     <div className="flex flex-col items-center justify-center min-h-[70vh]">
       <h2
@@ -25,7 +30,7 @@ function NotFound() {
         type="button"
         aria-label="Back to  home page"
         className="btn bg-blue-800 text-white"
-        onClick={() => navigate({ to: "/" })}
+        onClick={handleGoHome}
       >
         Go Home
       </button>
