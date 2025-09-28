@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { useTodos } from "../hooks/useTodos";
+import { useTodos } from "../../hooks/useTodos";
 import { RxDoubleArrowLeft, RxDoubleArrowRight } from "react-icons/rx";
 import FilterTodo from "./FilterTodo";
 import { LuCircleCheck, LuClock } from "react-icons/lu";

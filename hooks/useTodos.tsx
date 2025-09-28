@@ -1,5 +1,5 @@
 import { useQuery, useQueryClient, useMutation } from "@tanstack/react-query";
-import { fetchTodo, fetchTodos, updateTodo, createTodo } from "../api/todos";
+import { fetchTodo, fetchTodos, updateTodo, createTodo } from "../pages/api/todos";
 
 
 
