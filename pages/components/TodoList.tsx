@@ -1,6 +1,5 @@
 import React, { useState, useEffect } from "react";
 import Link from "next/link";
-import { useRouter } from "next/navigation";
 import { useTodos } from "../hooks/useTodos";
 import { RxDoubleArrowLeft, RxDoubleArrowRight } from "react-icons/rx";
 import FilterTodo from "./FilterTodo";
@@ -9,7 +8,7 @@ import SearchTodo from "./SearchTodo";
 import Loader from "../components/Loader";
 
 interface Todo {
-  id: number;
+  id: string;
   todo: string;
   completed: boolean;
   userId: number;
@@ -18,11 +17,14 @@ interface Todo {
 interface TodosData {
   todos: Todo[];
   total: number;
+  
 }
+type StatusFilter = "all" | "completed" | "incomplete";
 
-const TodoList = () => {
+
+const TodoList: React.FC = () => {
   const [currentPage, setCurrentPage] = useState(1);
-  const [statusFilter, setStatusFilter] = useState("all");
+  const [statusFilter, setStatusFilter] = useState<StatusFilter>("all");
   const [searchTerm, setSearchTerm] = useState("");
 
   const { data, isLoading, isError, error } = useTodos(
@@ -31,21 +33,14 @@ const TodoList = () => {
     searchTerm.trim(),
   );
 
-  const router = useRouter();
-
   // Reset to page 1 when filter changes
   useEffect(() => {
     setCurrentPage(1);
   }, [statusFilter, searchTerm]);
 
-  const handleSearch = (e: React.ChangeEvent<HTMLInputElement>) => {
-    const value = e.target.value;
-    setSearchTerm(value);
-
-    // If input becomes empty, reset immediately
-    if (!value.trim()) {
-      setSearchTerm("");
-    }
+  const handleSearch = () => {
+    // The useTodos hook is already dependent on searchTerm,
+    // so we don't need to do anything extra here.
   };
 
   if (isLoading) {
@@ -82,6 +77,7 @@ const TodoList = () => {
       <div className="flex flex-col md:flex-row gap-4 justify-between items-start md:items-center">
         <FilterTodo
           statusFilter={statusFilter}
+
           setStatusFilter={setStatusFilter}
         />
         <SearchTodo
@@ -89,6 +85,7 @@ const TodoList = () => {
           setSearchTerm={setSearchTerm}
           onSearch={handleSearch}
         />
+
       </div>
       <div className="-mx-6 xl:mx-0">
         <table className="table text-[1rem] my-8">

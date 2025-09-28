@@ -4,7 +4,7 @@ interface AddTodoProps {
   onClose: () => void;
   onSubmit: (todo: { title: string }) => void;
   isLoading?: boolean;
-  error?: Error;
+ error?: Error | null;
 }
 
 const AddTodo: React.FC<AddTodoProps> = ({ 

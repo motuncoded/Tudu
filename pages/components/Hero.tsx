@@ -8,8 +8,7 @@ import { createTodo } from "../api/todos"; // adjust path if needed
 
 // Define the shape of a Todo returned from API
 export type Todo = {
-  id: number;
-  title: string;
+  id: string;
   description?: string;
   // add other fields as needed
   completed?: boolean;
@@ -24,12 +23,13 @@ export type TodoInput = {
   completed?: boolean;
   userId?: string;
 };
-
-// Define error type
 type ErrorType = {
+  name: string;
   message: string;
-  // Add other error properties as needed
+  stack?: string;
 };
+// Define error type
+
 
 export default function Hero() {
   const [showModal, setShowModal] = useState<boolean>(false);
@@ -110,7 +110,8 @@ export default function Hero() {
           onClose={handleCloseModal}
           onSubmit={handleSubmitTodo}
           isLoading={mutation.isPending}
-          error={mutation.error}
+          error={mutation.error} 
+
         />
       )}
     </section>

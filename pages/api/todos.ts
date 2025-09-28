@@ -7,7 +7,7 @@ interface Todo {
   todo: string;
   completed: boolean;
   createdAt: string;
-  userId: number;
+  userId: string;
   isLocal?: boolean;
 }
 
@@ -27,7 +27,7 @@ export async function createTodo(todoData: TodoInput): Promise<Todo> {
     todo: todoData.title,
     completed: false,
     createdAt: new Date().toISOString(),
-    userId: 1,
+    userId: "1",
     isLocal: true,
   };
 
@@ -39,14 +39,15 @@ export async function createTodo(todoData: TodoInput): Promise<Todo> {
     });
 
     if (!response.ok) {
-      throw new Error("Failed to create on server");
+      throw new Error(`Failed to create on server: ${response.status}`);
     }
 
     const data = await response.json();
     await localTodoStore.setItem(newTodo.id, { ...newTodo, ...data });
     return { ...newTodo, ...data };
-  } catch (err: any) {
-    console.log("Saving todo locally due to server failure:", err.message);
+  } catch (err) {
+    const error = err as Error;
+    console.log("Saving todo locally due to server failure:", error.message);
     await localTodoStore.setItem(newTodo.id, newTodo);
     return newTodo;
   }
@@ -82,7 +83,6 @@ export const fetchTodos = async (
 
     let todos: Todo[] = (await response.json()).todos;
 
-    // FIXED: Removed the colon after todo parameter
     if (statusFilter !== "all") {
       const completedStatus = statusFilter === "completed";
       todos = todos.filter((todo) => todo.completed === completedStatus);
@@ -91,7 +91,7 @@ export const fetchTodos = async (
     if (searchTerm) {
       const searchLower = searchTerm.toLowerCase();
       todos = todos.filter((todo) =>
-        todo.todo.toLowerCase().includes(searchLower),
+        todo.todo.toLowerCase().includes(searchLower)
       );
     }
 
@@ -103,13 +103,14 @@ export const fetchTodos = async (
       page,
       limit,
     };
-  } catch (error: any) {
-    console.error("Error fetching todos:", error);
-    throw new Error(`Failed to fetch todos: ${error.message}`);
+  } catch (error) {
+    const err = error as Error;
+    console.error("Error fetching todos:", err.message);
+    throw new Error(`Failed to fetch todos: ${err.message}`);
   }
 };
 
-// fetch the individual todo
+// Fetch the individual todo
 export const fetchTodo = async (id: string): Promise<Todo> => {
   const response = await fetch(`https://dummyjson.com/todos/${id}`);
   if (!response.ok) throw new Error("Todo not found");
@@ -119,20 +120,21 @@ export const fetchTodo = async (id: string): Promise<Todo> => {
 export async function updateTodo(id: string, updateData: Partial<Todo>): Promise<Todo> {
   try {
     const response = await fetch(`https://dummyjson.com/todos/${id}`, {
-      method: "PUT", // Changed to PUT for updates
+      method: "PUT",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(updateData),
     });
     if (!response.ok) throw new Error("Failed to update todo on server");
     return response.json();
-  } catch (err: any) {
+  } catch (err) {
     const todo = await localTodoStore.getItem(id) as Todo;
     if (todo?.isLocal) {
       const updatedTodo = { ...todo, ...updateData };
       await localTodoStore.setItem(id, updatedTodo);
       return updatedTodo;
     } else {
-      throw err;
+      const error = err as Error;
+      throw error;
     }
   }
 }
@@ -153,8 +155,9 @@ export async function deleteTodo(id: string): Promise<{ id: string; deleteFrom?:
       throw new Error("Failed to delete todo");
     }
     return response.json();
-  } catch (err: any) {
-    console.error("Delete failed", err.message);
-    throw err;
+  } catch (err) {
+    const error = err as Error;
+    console.error("Delete failed", error.message);
+    throw error;
   }
 }

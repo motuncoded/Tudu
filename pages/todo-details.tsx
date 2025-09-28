@@ -11,6 +11,7 @@ import TodoError from "./components/TodoError";
 interface Todo {
   id: string;
   todo: string;
+  title:string;
   completed: boolean;
   userId: string;
 }
