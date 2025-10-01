@@ -97,7 +97,7 @@ export default function Hero() {
         filtering, and pagination. Built with modern web technologies for the
         best user experience.
       </p>
-      <button
+        <button
         type="button"
         className="btn bg-blue-700 text-white text-base mt-8"
         aria-label="Get Started"
@@ -114,6 +114,8 @@ export default function Hero() {
 
         />
       )}
+       
+      
     </section>
   );
 }

@@ -48,7 +48,7 @@ const AddTodo: React.FC<AddTodoProps> = ({
         
         <form onSubmit={handleSubmit}>
           <label htmlFor="todo-title" className="block text-sm font-medium mb-2">
-            Todo Title *
+            Todo Title 
           </label>
           <input
             type="text"

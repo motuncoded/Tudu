@@ -1,7 +1,7 @@
 import localforage from "localforage";
 import { v4 as uuidv4 } from "uuid";
 
-// Define types
+// Define types```````````
 interface Todo {
   id: string;
   todo: string;
